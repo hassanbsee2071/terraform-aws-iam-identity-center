@@ -1,10 +1,7 @@
 # Terraform AWS IAM Identity Center              (AWS SSO)
 
-At **Almosafer,** we utilize the IAM Identity Center to manage our growing user base. As our user  expands rapidly, we recognized the need to streamline our infrastructure management process. We explored the possibility of implementing infrastructure as code using Terraform. However, upon evaluation, we discovered that there was no existing module capable of handling the creation of users, groups, permission sets, account assignments, and group assignments within a single Terraform Module.
+At **Almosafer,** we utilize the IAM Identity Center to manage our growing user base. As our user  expands rapidly, we recognized the need to streamline our infrastructure management process. We explored the possibility of implementing infrastructure as code using Terraform. So I decided to develop a unified Terraform module that will the create users, groups, permission sets, account assignments, and group assignments with a single Terraform Module.
 
-While there were separate modules available for each aspect of IAM management, integrating them required executing multiple Terraform modules. I decided to develop a unified Terraform module that would facilitate the creation and management of all these resources. 
-
-This module will provisioning users, groups, permission sets, account assignments, and group assignments with single module.
 
 # Requirement
 Create a user **armon.dadgar** and assign full access to S3. Create a group called **hashicorp** and add **armon.dadgar** to the group. Group should have permission to only list object for bucket called terraform. Both entities have access to only account number **012345678901**

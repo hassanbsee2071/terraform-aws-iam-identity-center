@@ -1,0 +1,106 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "VisualEditor0",
+      "Effect": "Allow",
+      "Action": "qbusiness:*",
+      "Resource": "*"
+    },
+    {
+      "Sid": "ListBuckets",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetBucketLocation",
+        "s3:ListAllMyBuckets"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "FullS3Bucket",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:ListBucket",
+        "s3:PutObject",
+        "s3:ListBucketVersions",
+        "s3:DeleteObject",
+        "s3:DeleteObjectVersion"
+      ],
+      "Resource": [
+        "arn:aws:s3:::stage-emr-data",
+        "arn:aws:s3:::stage-emr-data/*",
+        "arn:aws:s3:::stage-emr-code",
+        "arn:aws:s3:::stage-emr-code/*",
+        "arn:aws:s3:::stage-emr-notebook",
+        "arn:aws:s3:::stage-emr-notebook/*",
+        "arn:aws:s3:::stage-seo-auto-reports",
+        "arn:aws:s3:::stage-seo-auto-reports/*",
+        "arn:aws:s3:::l1-dmap-skyscanner",
+        "arn:aws:s3:::l1-dmap-skyscanner/*",
+        "arn:aws:s3:::mos-vidoes",
+        "arn:aws:s3:::mos-vidoes/*",
+        "arn:aws:s3:::stage-crawla-scraping",
+        "arn:aws:s3:::stage-crawla-scraping/*",
+        "arn:aws:s3:::stage-winter-at-tantora-bigquery",
+        "arn:aws:s3:::stage-winter-at-tantora-bigquery/*",
+        "arn:aws:s3:::stage-alrajhi-bank",
+        "arn:aws:s3:::stage-alrajhi-bank/*",
+        "arn:aws:s3:::dmap-stage-sap",
+        "arn:aws:s3:::dmap-stage-sap/*",
+        "arn:aws:s3:::dmap-stage-d3js",
+        "arn:aws:s3:::dmap-stage-d3js/*",
+        "arn:aws:s3:::stage-cdp-cmp",
+        "arn:aws:s3:::stage-cdp-cmp/*",
+        "arn:aws:s3:::stage-alrajhi-bank",
+        "arn:aws:s3:::stage-alrajhi-bank/*",
+        "arn:aws:s3:::odl-1",
+        "arn:aws:s3:::odl-1/*",
+        "arn:aws:s3:::stage-tealium-data",
+        "arn:aws:s3:::stage-tealium-data/*",
+        "arn:aws:s3:::stage-sf-lms-reports",
+        "arn:aws:s3:::stage-sf-lms-reports/*",
+        "arn:aws:s3:::stage-hr-reports",
+        "arn:aws:s3:::stage-hr-reports/*",
+        "arn:aws:s3:::stage-clevertap",
+        "arn:aws:s3:::stage-clevertap/*",
+        "arn:aws:s3:::stage-emr-seera-logs",
+        "arn:aws:s3:::stage-emr-seera-logs/*",
+        "arn:aws:s3:::stage-almosafer-hotels-funnel",
+        "arn:aws:s3:::stage-almosafer-hotels-funnel/*",
+        "arn:aws:s3:::stage-moengage-campaigns",
+        "arn:aws:s3:::stage-moengage-campaigns/*",
+        "arn:aws:s3:::stage-moengage",
+        "arn:aws:s3:::stage-moengage/*",
+        "arn:aws:s3:::stage-enigma-logs",
+        "arn:aws:s3:::stage-enigma-logs/*"
+      ]
+    },
+    {
+      "Sid": "EMRReadAccess",
+      "Effect": "Allow",
+      "Action": [
+        "elasticmapreduce:DescribeStep",
+        "elasticmapreduce:ListInstances",
+        "elasticmapreduce:ListBootstrapActions",
+        "elasticmapreduce:DescribePersistentAppUI",
+        "elasticmapreduce:ListSteps",
+        "elasticmapreduce:CreatePersistentAppUI",
+        "elasticmapreduce:ListInstanceFleets",
+        "elasticmapreduce:DescribeCluster",
+        "elasticmapreduce:DescribeJobFlows",
+        "elasticmapreduce:ListInstanceGroups"
+      ],
+      "Resource": "arn:aws:elasticmapreduce:*:999961784013:cluster/*"
+    },
+    {
+      "Sid": "ListEMRClusterAccess",
+      "Effect": "Allow",
+      "Action": [
+        "elasticmapreduce:DescribeReleaseLabel",
+        "elasticmapreduce:ListClusters"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

@@ -1,5 +1,3 @@
-# terraform-aws-iam-identity-center
-
 # Terraform AWS IAM Identity Center              (AWS SSO)
 
 At **Almosafer,** we utilize the IAM Identity Center to manage our growing user base. As our user  expands rapidly, we recognized the need to streamline our infrastructure management process. We explored the possibility of implementing infrastructure as code using Terraform. However, upon evaluation, we discovered that there was no existing module capable of handling the creation of users, groups, permission sets, account assignments, and group assignments within a single Terraform Module.
@@ -44,10 +42,6 @@ description = "Full Access to bucket named terraform"
 ```
 locals {
 permission_sets =  {
-EKSOnly = {
-inline_policy  = "${file("./policies/inline/EKSOnly.json")}",
-session_duration = "PT12H",
-},
 hashicorp-terraform-bucket = {
 inline_policy = "${file("./policies/inline/hashicorp-terrafor-bucket.json")}"
 },
@@ -55,16 +49,18 @@ armon-dadgar = {
 managed_policies = ["arn:aws:iam::aws:policy/AmazonS3FullAccess"],
 session_duration = "PT12H",
 },
+/*
 data-athena-full-access = {
-inline_policy  = "${file("./policies/inline/data-athena-full-access.json")}"
-managed_policies = ["arn:aws:iam::aws:policy/AmazonAthenaFullAccess",  "arn:aws:iam::aws:policy/AWSGlueConsoleFullAccess",  "arn:aws:iam::aws:policy/AWSLambda_FullAccess",  "arn:aws:iam::aws:policy/AWSStepFunctionsFullAccess",  "arn:aws:iam::aws:policy/AmazonEventBridgeFullAccess"]
+inline_policy = "${file("./policies/inline/data-athena-full-access.json")}"
+managed_policies = ["arn:aws:iam::aws:policy/AmazonAthenaFullAccess", "arn:aws:iam::aws:policy/AWSGlueConsoleFullAccess", "arn:aws:iam::aws:policy/AWSLambda_FullAccess", "arn:aws:iam::aws:policy/AWSStepFunctionsFullAccess", "arn:aws:iam::aws:policy/AmazonEventBridgeFullAccess"]
 session_duration = "PT12H",
 },
 edl-stage-de-amazon-q-access = {
 session_duration = "PT12H"
 managed_policies = ["arn:aws:iam::aws:policy/AmazonQFullAccess"],
-inline_policy  = "${file("./policies/inline/edl-stage-de-amazon-q-access.json")}"
+inline_policy = "${file("./policies/inline/edl-stage-de-amazon-q-access.json")}"
 }
+*/
 }
 }
 ```
@@ -102,7 +98,7 @@ inline_policy  = "${file("./policies/inline/edl-stage-de-amazon-q-access.json")}
 ```
 locals {
 armon_dadgar =  {
-sso_groups  = ["hashicorp"]
+sso_groups  = ["hashicorp"]  /// This will add armon.dadgar to hashicorp group //////
 display_name = "Armon Dadgar"
 emails = [
 {
@@ -116,27 +112,13 @@ given_name  = "Dadgar"
 addresses  = []
 phone_numbers = []
 }
+///////// Single User Access, only providing access to armon.dadgar /////////
 armon_dadgar_s3_full_access =  {
 principal_name = "armon.dadgar@yahoo.com"
 principal_type = "USER"
 permission_set = "armon-dadgar"
 account_ids  = [local.accounts_mapping["hashicorp-aws"]]
 }
-/*
-devops_permission_dileep_pothanchery = {
-principal_name = "dileep.pothanchery@seera.sa"
-principal_type = "USER"
-permission_set = "DevopsPermission"
-account_ids = [local.accounts_mapping["hashicorp-aws"], local.accounts_mapping["hashicorp-aws-1"]]
-}
-quicksight_access_dileep_pothanchery = {
-principal_name = "dileep.pothanchery@seera.sa"
-principal_type = "USER"
-permission_set = "quicksight-access"
-account_ids = [local.accounts_mapping["Almosafer Company for Travel and Tourism"]]
-}
-*/
-
 }
 ```
 9. Create a file called 3_account_assignments.tf
@@ -146,26 +128,21 @@ account_assignments =  [
 local.armon_dadgar_s3_full_access,
 // local.s3-tjwhotelcms,
 
-/////////////////////////////////////////////////////// GROUP ASSIGNMENT /////////////////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+/////////////////////////////////////////////////////// GROUP ASSIGNMENT ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 {
-
 principal_name = "hashicorp"
 principal_type = "GROUP"
 permission_set = "hashicorp-terraform-bucket"
 account_ids  = [local.accounts_mapping["hashicorp-aws"]]
 },
 /*
-
 {
 principal_name = "sagemaker_poc"
 principal_type = "GROUP"
 permission_set = "sagemaker_poc"
-account_ids = [local.accounts_mapping["Tajawal POC Account"]]
+account_ids = [local.accounts_mapping["hashicorp-aws"]]
 },
 {
 principal_name = "security-eng-aws-admin"
@@ -173,9 +150,7 @@ principal_type = "GROUP"
 permission_set = "admin-access"
 account_ids = [local.accounts_mapping["security-engineering-prod"]]
 },
-
 */
-
 ]
 }
 ``` 

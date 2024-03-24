@@ -12,10 +12,7 @@ locals {
     },
 
 /*
-    EKSOnly = {
-      inline_policy    = "${file("./policies/inline/EKSOnly.json")}",
-      session_duration = "PT12H",
-    },
+
     data-athena-full-access = {
       inline_policy    = "${file("./policies/inline/data-athena-full-access.json")}"
       managed_policies = ["arn:aws:iam::aws:policy/AmazonAthenaFullAccess", "arn:aws:iam::aws:policy/AWSGlueConsoleFullAccess", "arn:aws:iam::aws:policy/AWSLambda_FullAccess", "arn:aws:iam::aws:policy/AWSStepFunctionsFullAccess", "arn:aws:iam::aws:policy/AmazonEventBridgeFullAccess"]
